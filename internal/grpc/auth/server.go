@@ -3,6 +3,8 @@ package auth
 import (
 	"context"
 
+	ssoy1 "github.com/aolychkin/protos/gen/go/sso"
+
 	"google.golang.org/grpc"
 )
 
@@ -18,19 +20,21 @@ func (s *serverAPI) Login(
 	ctx context.Context,
 	req *ssoy1.LoginRequest,
 ) (*ssoy1.LoginResponse, error) {
-	panic("implement me")
+	return &ssoy1.LoginResponse{
+		Token: req.GetEmail(),
+	}, nil
 }
 
 func (s *serverAPI) Register(
 	ctx context.Context,
-	req *ssoy1.LoginRequest,
-) (*ssoy1.LoginResponse, error) {
+	req *ssoy1.RegisterRequest,
+) (*ssoy1.RegisterResponse, error) {
 	panic("implement me")
 }
 
 func (s *serverAPI) IsAdmin(
 	ctx context.Context,
-	req *ssoy1.LoginRequest,
-) (*ssoy1.LoginResponse, error) {
+	req *ssoy1.IsAdminRequest,
+) (*ssoy1.IsAdminResponse, error) {
 	panic("implement me")
 }

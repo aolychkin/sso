@@ -4,11 +4,11 @@ import (
 	"log/slog"
 	"time"
 
-	"google.golang.org/grpc"
+	"github.com/aolychkin/sso/internal/app/grpcapp"
 )
 
 type App struct {
-	GRPCSrv *grpc.Server
+	GRPCSrv *grpcapp.App
 }
 
 func New(

@@ -6,3 +6,4 @@ TODO: setUserAdmin handler + not Admin
 
 LEARN: контекст в Go + Background
 LEARN: testify
+LEARN: приватная сеть для общения сервисов

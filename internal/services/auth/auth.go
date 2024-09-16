@@ -7,10 +7,11 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/aolychkin/sso/internal/domain/models"
-	"github.com/aolychkin/sso/internal/lib/jwt"
-	"github.com/aolychkin/sso/internal/lib/logger/sl"
-	"github.com/aolychkin/sso/internal/storage"
+	"grpc-service-ref/internal/domain/models"
+	"grpc-service-ref/internal/lib/jwt"
+	"grpc-service-ref/internal/lib/logger/sl"
+	"grpc-service-ref/internal/storage"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -42,7 +43,8 @@ type AppProvider interface {
 var (
 	ErrInvalidCredentials = errors.New("invalid credentials")
 	ErrInvalidAddID       = errors.New("invalid app id")
-	ErrUserExists         = errors.New("user  already exists")
+	ErrUserExists         = errors.New("user already exists")
+	ErrUserNotFound       = errors.New("user not found")
 )
 
 // New returns a new instance of the Auth service.
@@ -91,7 +93,7 @@ func (a *Auth) Login(
 		return "", fmt.Errorf("%s: %w", op, err)
 	}
 
-	if err := bcrypt.CompareHashAndPassword(user.PassHash, []byte{password}); err != nil {
+	if err := bcrypt.CompareHashAndPassword(user.PassHash, []byte(password)); err != nil {
 		a.log.Info("invalid credentials", sl.Err(err))
 
 		return "", fmt.Errorf("%s: %w", op, ErrInvalidCredentials)

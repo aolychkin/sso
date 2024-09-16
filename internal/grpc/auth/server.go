@@ -4,10 +4,9 @@ import (
 	"context"
 	"errors"
 
+	"grpc-service-ref/internal/services/auth"
+
 	ssov1 "github.com/aolychkin/protos/gen/go/sso"
-	"github.com/aolychkin/sso/internal/grpc/auth"
-	"github.com/aolychkin/sso/internal/services/auth"
-	"github.com/aolychkin/sso/internal/storage"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
@@ -51,10 +50,10 @@ func (s *serverAPI) Login(
 
 	if err != nil {
 		if errors.Is(err, auth.ErrInvalidCredentials) {
-			return nil, status.Error(codes.InvalidArgument, "invalid credentials")
+			return nil, status.Error(codes.InvalidArgument, "invalid email or password")
 		}
 
-		return nil, status.Error(codes.Internal, "internal error")
+		return nil, status.Error(codes.Internal, "failed to login")
 	}
 
 	return &ssov1.LoginResponse{
@@ -72,7 +71,7 @@ func (s *serverAPI) Register(
 
 	userID, err := s.auth.RegisterNewUser(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
-		if errors.Is(err, storage.ErrUserExists) {
+		if errors.Is(err, auth.ErrUserExists) {
 			return nil, status.Error(codes.AlreadyExists, "user already exists")
 		}
 
@@ -94,7 +93,7 @@ func (s *serverAPI) IsAdmin(
 
 	isAdmin, err := s.auth.IsAdmin(ctx, req.GetUserId())
 	if err != nil {
-		if errors.Is(err, storage.ErrUserNotFound) {
+		if errors.Is(err, auth.ErrUserNotFound) {
 			return nil, status.Error(codes.NotFound, "user not found")
 		}
 

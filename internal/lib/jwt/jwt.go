@@ -3,7 +3,8 @@ package jwt
 import (
 	"time"
 
-	"github.com/aolychkin/sso/internal/domain/models"
+	"grpc-service-ref/internal/domain/models"
+
 	"github.com/golang-jwt/jwt"
 )
 

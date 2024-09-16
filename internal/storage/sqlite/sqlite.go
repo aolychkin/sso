@@ -6,8 +6,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/aolychkin/sso/internal/domain/models"
-	"github.com/aolychkin/sso/internal/storage"
+	"grpc-service-ref/internal/domain/models"
+	"grpc-service-ref/internal/storage"
+
 	"github.com/mattn/go-sqlite3"
 )
 
@@ -57,7 +58,7 @@ func (s *Storage) SaveUser(ctx context.Context, email string, passHash []byte) (
 func (s *Storage) User(ctx context.Context, email string) (models.User, error) {
 	const op = "storage.sqlite.User"
 
-	stmt, err := s.db.Prepare("SELECT id, pass_hash FROM users WHERE email = ?")
+	stmt, err := s.db.Prepare("SELECT id, email, pass_hash FROM users WHERE email = ?")
 	if err != nil {
 		return models.User{}, fmt.Errorf("%s: %w", op, err)
 	}
@@ -98,7 +99,7 @@ func (s *Storage) IsAdmin(ctx context.Context, userID int64) (bool, error) {
 	return isAdmin, nil
 }
 
-func (s *Storage) App(ctx context.Context, appID int64) (models.App, error) {
+func (s *Storage) App(ctx context.Context, appID int) (models.App, error) {
 	const op = "storage.sqlite.App"
 
 	stmt, err := s.db.Prepare("SELECT id, name, secret FROM apps WHERE id = ?")

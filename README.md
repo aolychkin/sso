@@ -2,3 +2,7 @@
 
 TODO: Сделать нормализацию БД
 TODO: Сделать пермишен сервис
+TODO: setUserAdmin handler + not Admin
+
+LEARN: контекст в Go + Background
+LEARN: testify

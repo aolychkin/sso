@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/aolychkin/sso/internal/app"
-	"github.com/aolychkin/sso/internal/config"
+	"grpc-service-ref/internal/app"
+	"grpc-service-ref/internal/config"
 )
 
 const (

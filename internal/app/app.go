@@ -4,9 +4,9 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/aolychkin/sso/internal/app/grpcapp"
-	"github.com/aolychkin/sso/internal/services/auth"
-	"github.com/aolychkin/sso/internal/storage/sqlite"
+	"grpc-service-ref/internal/app/grpcapp"
+	"grpc-service-ref/internal/services/auth"
+	"grpc-service-ref/internal/storage/sqlite"
 )
 
 type App struct {
@@ -24,7 +24,7 @@ func New(
 		panic(err)
 	}
 
-	authService := auth.New(log, storage, storage, storage, tokenTTl)
+	authService := auth.New(log, storage, storage, storage, tokenTTL)
 
 	grpcApp := grpcapp.New(log, authService, grpcPort)
 

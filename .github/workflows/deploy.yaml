@@ -27,8 +27,6 @@ jobs:
             echo "error: Tag '${{ github.event.inputs.tag }}' not found"
             exit 1
           fi
-      - name: Export CONFIG_PATH
-        run: export CONFIG_PATH=/root/apps/grpc-auth/config/prod.yaml
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
